@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration | WBSPR Annual Conference 2026</title>
+  <meta name="description"
+    content="Register for the WBSPR Annual Conference 2026 organized by WBSPR at The Park Hotel, Kolkata.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+  <!-- Navigation Placeholder -->
+  <div id="nav-placeholder"></div>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container animate-on-scroll">
+      <h1>Conference Registration</h1>
+      <div class="divider"></div>
+      <p>Secure your spot for the WBSPR Annual Conference 2026</p>
+    </div>
+  </header>
+
+  <!-- Notice Ticker -->
+  <div class="notice-ticker">
+    <div class="notice-ticker-track" id="notice-ticker-track"></div>
+  </div>
+
+  <main class="section">
+    <div class="container">
+
+      <!-- Pricing Table Reference -->
+      <div class="pricing-table-container">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th class="early-bird-col" style="color: #000;">Early Bird</th>
+              <th>Regular</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Delegate</td>
+              <td class="price-cell early-bird-col">To be announced</td>
+              <td class="price-cell">To be announced</td>
+            </tr>
+            <tr>
+              <td>PGT</td>
+              <td class="price-cell early-bird-col">To be announced</td>
+              <td class="price-cell">To be announced</td>
+            </tr>
+            <tr>
+              <td>Faculty</td>
+              <td class="price-cell early-bird-col">To be announced</td>
+              <td class="price-cell">To be announced</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="text-center text-muted" style="font-size: 0.8rem; margin-top: 10px;">
+          <em>* Registration fees for the WBSPR Annual Conference 2026 will be announced shortly by the organizing committee.</em>
+        </p>
+      </div>
+
+      <!-- Registration Form Container -->
+      <div id="reg-form-container" class="register-card animate-on-scroll">
+
+        <div class="text-center" style="margin-bottom: 2rem;">
+          <h2 style="font-size:1.8rem; margin-bottom: 0.5rem;">Register Now</h2>
+          <p class="text-muted">Fill in your details below to register. Fields marked with * are mandatory.</p>
+        </div>
+
+        <form id="reg-form" onsubmit="event.preventDefault(); payAndRegisterWBSPR();">
+
+          <div class="form-section-title"><span>1</span> Personal Details</div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="reg-name">Full Name *</label>
+              <input type="text" id="reg-name" class="form-control" placeholder="Dr. John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-email">Email Address *</label>
+              <input type="email" id="reg-email" class="form-control" placeholder="john@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="reg-mobile">Mobile Number (WhatsApp) *</label>
+              <input type="tel" id="reg-mobile" class="form-control" pattern="[6-9]\d{9}" placeholder="9876543210"
+                title="10-digit mobile number" required>
+            </div>
+            <div class="form-group">
+              <label for="reg-alt-mobile">Alternate Number</label>
+              <input type="tel" id="reg-alt-mobile" class="form-control" pattern="[6-9]\d{9}" placeholder="Optional">
+            </div>
+          </div>
+
+          <div class="form-section-title"><span>2</span> Professional Details</div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="reg-category">Registration Category *</label>
+              <select id="reg-category" class="form-control" onchange="updateRegistrationFee()" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="Delegate">Delegate</option>
+                <option value="PGT">PGT (Post Graduate Trainee)</option>
+                <option value="Faculty">Faculty</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="reg-designation">Designation *</label>
+              <input type="text" id="reg-designation" class="form-control" placeholder="e.g. Consultant Pediatrician"
+                required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-institution">Institution / Hospital / Clinic *</label>
+            <input type="text" id="reg-institution" class="form-control" placeholder="Name of your workplace" required>
+          </div>
+
+          <div class="form-group" id="upload-container" style="display: none;">
+            <label id="upload-label" for="reg-doc">Upload Document</label>
+            <input type="file" id="reg-doc" class="form-control" accept=".pdf,image/png,image/jpeg,image/jpg">
+            <small class="text-muted" style="display:block; margin-top:5px;">Supported formats: PDF, JPG, PNG.</small>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <!-- Fee Display Area -->
+          <div id="fee-display-box" class="fee-display-box" style="display: none;">
+            <!-- Content injected by JS -->
+          </div>
+
+          <div class="total-bar">
+            <span class="total-label">Total Amount Payable</span>
+            <span class="total-value" id="total-display">—</span>
+          </div>
+
+          <div class="text-center" style="margin-top: 2rem;">
+            <button type="submit" id="reg-submit-btn" class="btn btn-gold btn-lg w-100"
+              style="max-width: 300px;">Proceed to Payment</button>
+            <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 1rem;">
+              By proceeding, you agree to the conference terms and conditions.
+            </p>
+          </div>
+
+        </form>
+
+
+      </div>
+
+      <!-- Registration Success Container (Hidden by default) -->
+      <div id="reg-success-container" style="display: none;">
+        <div class="success-card">
+          <div class="success-card-header no-print">
+            <div class="success-check"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
+            <h2 style="color: #fff; margin-bottom: 5px;">Registration Successful!</h2>
+            <p style="margin: 0; opacity: 0.9;">Thank you for registering for the WBSPR Annual Conference 2026.</p>
+          </div>
+
+          <div class="success-card-body print-receipt">
+            <div class="print-receipt-header">
+              <h2 style="color: var(--color-primary); margin-bottom: 5px;">WBSPR Annual Conference 2026</h2>
+              <p style="margin:0; color: var(--color-text-muted);">Organized by WBSPR</p>
+              <h3 style="margin-top:15px;">Registration Receipt</h3>
+            </div>
+
+            <div class="text-center no-print" style="margin-bottom: 2rem;">
+              <div class="reg-id-display" id="s-reg-id">WBSPR26-XXXX</div>
+              <p class="text-muted" style="font-size: 0.9rem; margin-top: 5px;">Your unique Registration ID. Please save
+                this for future reference.</p>
+            </div>
+
+            <div class="grid-2">
+              <div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Name</span>
+                  <span class="reg-detail-value" id="s-name">-</span>
+                </div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Category</span>
+                  <span class="reg-detail-value" id="s-category">-</span>
+                </div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Institution</span>
+                  <span class="reg-detail-value" id="s-inst">-</span>
+                </div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Mobile</span>
+                  <span class="reg-detail-value" id="s-mobile">-</span>
+                </div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Email</span>
+                  <span class="reg-detail-value" id="s-email">-</span>
+                </div>
+              </div>
+              <div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Amount Paid</span>
+                  <span class="reg-detail-value" id="s-amount"
+                    style="color: var(--color-success); font-size: 1.1rem;">-</span>
+                </div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Reg. Period</span>
+                  <span class="reg-detail-value" id="s-period">-</span>
+                </div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Event Dates</span>
+                  <span class="reg-detail-value" id="s-date">-</span>
+                </div>
+                <div class="reg-detail-row">
+                  <span class="reg-detail-label">Venue</span>
+                  <span class="reg-detail-value" id="s-venue">-</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center no-print" style="margin-top: 2rem;" id="qr-container">
+              <!-- QR Code injected here -->
+            </div>
+
+            <div class="text-center no-print" style="margin-top: 2rem;">
+              <button class="btn btn-teal" onclick="printRegistrationReceipt()">
+                Print Receipt
+              </button>
+              <a href="index.html" class="btn btn-outline" style="margin-left: 10px;">Return to Home</a>
+            </div>
+
+            <div class="print-receipt-row" style="display:none;">
+              <span style="font-size:0.8rem; color:#666; margin-top:30px;">* This is a computer-generated receipt and
+                does not require a physical signature.</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Loader -->
+  <div class="loader-overlay">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Loading</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
